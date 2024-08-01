@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>朱富贵餐饮</title>
+    <title>排队详情</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta lang="zh" />
     <style type="text/css">
@@ -78,7 +77,6 @@
 
                 #info .item .val {
                     position: relative;
-                    top: -1px;
                     left: 54px;
                     position: relative;
                     height: 20px;
@@ -108,7 +106,7 @@
         <div class="item"><span class="label">我的号码</span><span id="item-num" class="val red bold"></span></div>
         <div class="item"><span class="label">用餐人数</span><span id="item-pr" class="val"></span></div>
         <div class="item"><span class="label">等待桌数</span><span class="val">0</span></div>
-        <div class="item"><span class="label">当前叫号</span><span class="val">-</span></div>
+        <div class="item"><span class="label">当前叫号</span><span id="item-turn" class="val">-</span></div>
         <div class="item"><span class="label">号码状态</span><span class="val">请您用餐</span></div>
     </div>
     <script type="text/javascript">
@@ -124,47 +122,38 @@
             vars[ar[0]] = ar[1];
         }
 
-        var time = vars.time;
-        if(time){
-            time = decodeURI(time);
+        if(!vars.num){
+            vars.num = "缺少参数 num";
         }
-        else{
-            var date = new Date(new Date().getTime() - 30 * 60000);
-            var year = date.getFullYear().toString();
-            var month = (date.getMonth() + 1).toString();
-            if (month.length == 1) {
-                month = '0' + month;
-            }
-            var day = date.getDate().toString();
-            if (day.length == 1) {
-                day = '0' + day;
-            }
-            var hours = date.getHours().toString();
-            if (hours.length == 1) {
-                hours = '0' + hours;
-            }
-            var minutes = date.getMinutes().toString();
-            if (minutes.length == 1) {
-                minutes = '0' + minutes;
-            }
-            var seconds = date.getSeconds().toString();
-            if (seconds.length == 1) {
-                seconds = '0' + seconds;
-            }
-           time = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+        if(!vars.time){
+            vars.time = "缺少参数 time";
         }
-        var people = vars.people;
-        if (!people) { people = 2; }
-        var num = vars.num;
-        if(!num){
-            num = "缺少 Url 参数 num";
+        if (!vars.people) { 
+            vars.people = 2;
         }
-        var code = people <= 2 ? "A" : "B";
-        var pr = code === "A" ? "1-2人" : "3-4人";
+        if(!vars.day){
+            var now = new Date();
+            var yyyy = now.getFullYear().toString();
+            var MM = (now.getMonth() + 1).toString();
+            if (MM.length == 1) {
+                MM = "0" + MM;
+            }
+            var dd = now.getDate().toString();
+            if (dd.length == 1) {
+                dd = "0" + dd;
+            }
+            vars.day = yyyy + '-' + MM + '-' + dd;
+        }
+        if(!vars.turn){
+            vars.turn = "-";
+        }
+        var code = vars.people <= 2 ? "A" : "B";
+        var pr = vars.code == "A" ? "1-2人" : "3-4人";
 
-        document.getElementById("item-time").innerText = time;
-        document.getElementById("item-num").innerText = code + num;
+        document.getElementById("item-time").innerText = vars.day + ' ' + vars.time;
+        document.getElementById("item-num").innerText = code + vars.num;
         document.getElementById("item-pr").innerText = pr;
+        document.getElementById("item-turn").innerText = code + vars.turn;
     </script>
 </body>
 </html>

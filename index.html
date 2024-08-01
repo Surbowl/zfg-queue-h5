@@ -122,15 +122,6 @@
             vars[ar[0]] = ar[1];
         }
 
-        if(!vars.num){
-            vars.num = "缺少参数 num";
-        }
-        if(!vars.time){
-            vars.time = "缺少参数 time";
-        }
-        if (!vars.people) { 
-            vars.people = 2;
-        }
         if(!vars.day){
             var now = new Date();
             var yyyy = now.getFullYear().toString();
@@ -144,16 +135,29 @@
             }
             vars.day = yyyy + '-' + MM + '-' + dd;
         }
-        if(!vars.turn){
-            vars.turn = "-";
+        if (!vars.people) { 
+            vars.people = 2;
         }
         var code = vars.people <= 2 ? "A" : "B";
         var pr = vars.code == "A" ? "1-2人" : "3-4人";
+        if(!vars.time){
+            vars.time = "缺少参数 time";
+        }
+        if(vars.num){
+            vars.num = code + vars.num;
+        }else{
+            vars.num = "缺少参数 num";
+        }
+        if(vars.turn){
+            vars.turn = code + vars.turn;
+        }else{
+            vars.turn = "-";
+        }
 
         document.getElementById("item-time").innerText = vars.day + ' ' + vars.time;
-        document.getElementById("item-num").innerText = code + vars.num;
+        document.getElementById("item-num").innerText = vars.num;
         document.getElementById("item-pr").innerText = pr;
-        document.getElementById("item-turn").innerText = code + vars.turn;
+        document.getElementById("item-turn").innerText = vars.turn;
     </script>
 </body>
 </html>

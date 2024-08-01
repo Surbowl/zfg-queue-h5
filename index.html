@@ -84,6 +84,25 @@
                     color: #2f2f2f;
                 }
 
+        #btn{
+            position: absolute;
+            bottom: 16px;
+            left: 25px;
+            width: 395px;
+            height: 62px;
+            background-color: #a32928;
+            border-radius: 28px;
+            text-align: center;
+        }
+        
+            #btn span{
+                position: relative;
+                top: 19px;
+                margin: auto auto;
+                color: #fff;
+                font-size: 19px;
+            }
+
         .red {
             color: #a21f24 !important;
         }
@@ -94,7 +113,7 @@
     </style>
 </head>
 <body>
-    <img id="bg" src="https://educate-res.babybus.com/Educate/ResourceFile/20240801/36f5150a9b274e7a880ef67cde46b052.jpg" />
+    <img id="bg" />
     <div id="store-name">朱富贵(欢乐颂店)</div>
     <div id="store">
         <div class="item"><span class="val">11:00-次日 05:00</span></div>
@@ -109,6 +128,7 @@
         <div class="item"><span class="label">当前叫号</span><span id="item-turn" class="val"></span></div>
         <div class="item"><span class="label">号码状态</span><span id="item-state" class="val"></span></div>
     </div>
+    <div id="btn"><span>取消排队</div></div>
     <script type="text/javascript">
         function getQuery(variable) {
             return (false);
@@ -147,7 +167,7 @@
             vars.num = 200;
         }
         if(!vars.turn){
-            vars.turn = 1;
+            vars.turn = vars.num;
         }
         var wait = vars.num - vars.turn;
 
@@ -157,6 +177,8 @@
         document.getElementById("item-wait").innerText = wait > 0 ? (wait + '') : '0';
         document.getElementById("item-turn").innerText = code + vars.turn;
         document.getElementById("item-state").innerText = wait > 0 ? '等候中' : '请您用餐';
+        document.getElementById("bg").src = wait > 0 ? "https://educate-res.babybus.com/Educate/ResourceFile/20240801/1b54ee9b8efb4dfe8b641dcf9e4c245e.jpg" : "https://educate-res.babybus.com/Educate/ResourceFile/20240801/36f5150a9b274e7a880ef67cde46b052.jpg";
+        document.getElementById("btn").style.display = wait > 0 ? "" : "none";
     </script>
 </body>
 </html>

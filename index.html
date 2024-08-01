@@ -105,9 +105,9 @@
         <div class="item"><span class="label">排队时间</span><span id="item-time" class="val"></span></div>
         <div class="item"><span class="label">我的号码</span><span id="item-num" class="val red bold"></span></div>
         <div class="item"><span class="label">用餐人数</span><span id="item-pr" class="val"></span></div>
-        <div class="item"><span class="label">等待桌数</span><span class="val">0</span></div>
-        <div class="item"><span class="label">当前叫号</span><span id="item-turn" class="val">-</span></div>
-        <div class="item"><span class="label">号码状态</span><span class="val">请您用餐</span></div>
+        <div class="item"><span class="label">等待桌数</span><span id="item-wait" class="val"></span></div>
+        <div class="item"><span class="label">当前叫号</span><span id="item-turn" class="val"></span></div>
+        <div class="item"><span class="label">号码状态</span><span id="item-state" class="val"></span></div>
     </div>
     <script type="text/javascript">
         function getQuery(variable) {
@@ -143,21 +143,20 @@
         if(!vars.time){
             vars.time = "缺少参数 time";
         }
-        if(vars.num){
-            vars.num = code + vars.num;
-        }else{
-            vars.num = "缺少参数 num";
+        if(!vars.num){
+            vars.num = 200;
         }
-        if(vars.turn){
-            vars.turn = code + vars.turn;
-        }else{
-            vars.turn = "-";
+        if(!vars.turn){
+            vars.turn = 1;
         }
+        var wait = vars.num - vars.turn;
 
         document.getElementById("item-time").innerText = vars.day + ' ' + vars.time;
-        document.getElementById("item-num").innerText = vars.num;
+        document.getElementById("item-num").innerText = code + vars.num;
         document.getElementById("item-pr").innerText = pr;
-        document.getElementById("item-turn").innerText = vars.turn;
+        document.getElementById("item-wait").innerText = wait > 0 ? (wait + '') : '-';
+        document.getElementById("item-turn").innerText = code + vars.turn;
+        document.getElementById("item-state").innerText = wait > 0 ? '等候中' : '请您用餐';
     </script>
 </body>
 </html>
